@@ -15,7 +15,7 @@ import Posts from '../../../api/posts';
 import { Meteor } from 'meteor/meteor';
 import TextField from '@material-ui/core/TextField';
 import Fab from '@material-ui/core/Fab';
-// import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 import Send from '@material-ui/icons/Send';
 const styles = {
   card: {
@@ -42,7 +42,6 @@ class SinglePost extends Component {
       comments : ''
     };
     }
-
     updateLike = async () => {
       let specificPost = Posts.findOne({_id: this.props._id})
 
@@ -66,10 +65,15 @@ class SinglePost extends Component {
     }
 
     componentWillMount() {
-      let likedPost = this.props.like;
-      likedPost ? this.setState({liked : true}) : ''
+      if (Meteor.user()){
+      if (this.props.userliked.includes(Meteor.user()._id)){
+        this.setState({liked : true})
+      }else{
+        this.setState({liked : false})
+      }}else{
+        ''
+      }
     }
-  
 
     handleCommentSubmit() {
       this.setState({comments : ''})
@@ -83,8 +87,6 @@ class SinglePost extends Component {
 
 render(){ 
   const { classes } = this.props;
-  // const email = this.props.user.emails[0].address
-  // const name = email.substring(0, email.lastIndexOf("@"));
   return (
     <Card className={classes.card}>
         <CardMedia
@@ -103,12 +105,14 @@ render(){
             {this.props.like}
         </Typography>
       </CardActions>
+      <Link style={{'textDecoration' : 'none'}} to={"/User/"+this.props.user._id}>
         <CardHeader className="card-header"
           avatar={
             <Avatar aria-label="Recipe" src={this.props.user.profile.avatar} className={classes.avatar}/>
           }
           title={this.props.user.profile.name}
         />
+        </Link>
          <Typography id="description" component="h3">
              {this.props.description}
         </Typography>
