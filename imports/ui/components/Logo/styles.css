@@ -1,0 +1,18 @@
+.logo-div {
+    position: fixed;
+    z-index: 2;
+    border-radius: 50px;
+    width: 210px;
+    height: 35px;
+    padding-top: 10px;
+    padding-left: 5px;
+    padding-right: 15px;
+    padding-bottom: 30px;
+    background-color: #FAFAFA;
+    box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.48);
+}
+.logo {
+    width: 215px;
+    height: 155px;
+    margin-top: -50px;
+}

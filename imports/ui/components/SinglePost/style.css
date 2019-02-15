@@ -1,0 +1,17 @@
+  .like-btn{
+    margin-bottom: 2px;
+    margin-left: -5px;
+  }
+  .card-header{
+    margin-left: -17px;
+  }
+  #liked-btn{
+  color: red;
+  }
+  .comment{
+    display: flex;
+    flex-direction: column;
+  }
+  #description{
+    font-weight: 600;
+  }
