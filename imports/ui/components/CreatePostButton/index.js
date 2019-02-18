@@ -28,7 +28,6 @@ componentWillMount(){
 
   render() {
     return (
-      // this.state.user ?
       <div>
         <Button style={{'position':'fixed', 'right' : '20px',
          'bottom' : '20px', 'backgroundColor' : '#0C6CD4', 'padding' : '10px', 'zIndex' : '5',
@@ -56,8 +55,8 @@ componentWillMount(){
           </DialogActions>
         </Dialog>
       </div>
-      // :
-      // ''
+      //  :
+      //  ''
     );
   }
 }

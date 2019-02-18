@@ -1,10 +1,10 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Form } from 'react-final-form';
 import Fingerprint from '@material-ui/icons/Fingerprint';
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
-import {Field} from 'react-final-form';
+import { Redirect, Link } from 'react-router'
+import { Meteor } from 'meteor/meteor';
+import { Form, Field } from 'react-final-form'
 import TextField from '@material-ui/core/TextField';
 const styles = theme => ({
   container: {
@@ -31,7 +31,8 @@ class SignUpForm extends React.Component {
     email: '',
     avatar:'',
     bio:'',
-    signup : true
+    signup : true,
+    redirect : false
   };
 
 handleToggleSignUp = sign =>{
@@ -66,7 +67,7 @@ const checkPasswordIsValid = (aString)=> {
         alert('Your password must be at least 8 characters long');
       }
     } else {  
-     await Accounts.createUser({
+        Accounts.createUser({
         email: emailAddress,
         password: password,
         profile: {
@@ -75,29 +76,31 @@ const checkPasswordIsValid = (aString)=> {
           bio : this.state.bio
         } 
     }); 
-   // window.location.replace(baseUrl + '/Home')
     }
+    this.setState({redirect : true})
   }
 
   const onLogin = async values => {
     values.preventDefault()
     let emailAddress = this.state.email || '';
     let password = this.state.password || '';
-    await Meteor.loginWithPassword(emailAddress, password);
-    //window.location.replace(baseUrl + '/Home')
+    Meteor.loginWithPassword(emailAddress, password);
+    this.setState({redirect : true})
   }
 
     const { classes } = this.props;
 
     return (
-      (this.state.signup) ? 
+      !this.state.redirect ? 
+      
+      this.state.signup ? 
       <div>
         <Form
         onSubmit={onSignUp}
         render={({ handleSubmit, pristine, invalid }) => (
       <form onSubmit={onSignUp} className={classes.container} autoComplete="off">
-        <Field
-          component={TextField}
+        <TextField
+          
           required
           onChange={e => this.setState({name : e.target.value})}
           value={this.state.name}
@@ -106,8 +109,7 @@ const checkPasswordIsValid = (aString)=> {
           margin="normal"
           variant="outlined"
         />
-        <Field
-          component={TextField}
+        <TextField
           required
           onChange={e => this.setState({email : e.target.value})}
           label="Email"
@@ -116,8 +118,7 @@ const checkPasswordIsValid = (aString)=> {
           margin="normal"
           variant="outlined"
         />
-        <Field
-          component={TextField}
+        <TextField
           required
           minLength={8}
           onChange={e => this.setState({password : e.target.value})}
@@ -128,8 +129,7 @@ const checkPasswordIsValid = (aString)=> {
           variant="outlined"
           type="password"
         />
-        <Field
-          component={TextField}
+        <TextField
           required
           onChange={e => this.setState({avatar : e.target.value})}
           value={this.state.avatar}
@@ -138,8 +138,7 @@ const checkPasswordIsValid = (aString)=> {
           margin="normal"
           variant="outlined"
         />
-        <Field
-          component={TextField}
+        <TextField
           required
           onChange={e => this.setState({bio : e.target.value})}
           value={this.state.bio}
@@ -152,9 +151,9 @@ const checkPasswordIsValid = (aString)=> {
            Sign Up
             <Fingerprint/>
          </Button>
-        <Button color="primary" className={classes.button}>
-          <a href={baseUrl + "/Home"} >Go to Homepage</a>
-        </Button>
+        {/* <Button component={ Link } to="/Home" variant="contained" color="primary">
+          Go to the homepage
+        </Button> */}
       </form>
         )}
         />
@@ -167,8 +166,7 @@ const checkPasswordIsValid = (aString)=> {
         render={({ handleSubmit, pristine, invalid }) => (
       <form style={{'display' : 'block'}} onSubmit={onLogin}>
       <div>
-      <Field
-          component={TextField}
+      <TextField
           required
           label="Email"
           onChange={e => this.setState({email : e.target.value})}
@@ -177,8 +175,7 @@ const checkPasswordIsValid = (aString)=> {
           margin="normal"
           variant="outlined"
         />
-        <Field
-          component={TextField}
+        <TextField
           required
           value={this.state.password}
           onChange={e => this.setState({password : e.target.value})}
@@ -193,14 +190,17 @@ const checkPasswordIsValid = (aString)=> {
             <Fingerprint/>
          </Button>
       </div>
-        <Button color="primary" className={classes.button}>
-           <a href={baseUrl + "/Home"}>Go to Homepage</a>
-        </Button>
+      {/* <Button component={ Link } to="/Home" variant="contained" color="primary">
+          Go to the homepage
+      </Button> */}
       </form>
         )}
         />
       <p style={{'fontSize' : '15px'}} className="p-link" onClick={this.handleToggleSignUp} >Click here to sign-up</p>
       </div>
+      : 
+       <Redirect to="/Home"/>
+      
     );
   }
 }
