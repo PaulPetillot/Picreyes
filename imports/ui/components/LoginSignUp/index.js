@@ -34,8 +34,7 @@ function LoginSignUp(props) {
           Login / Sign-Up
         </Typography>
         <Typography variant="h5" component="h2">
-         <SignUp/>   
-         <LoginForm/> 
+        {Meteor.user() ? <SignUp/> :  <LoginForm/> } 
         </Typography>
       </CardContent>
     </Card>

@@ -1,10 +1,11 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 import { Form } from 'react-final-form';
 import Fingerprint from '@material-ui/icons/Fingerprint';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
+import {Field} from 'react-final-form';
+import TextField from '@material-ui/core/TextField';
 const styles = theme => ({
   container: {
     display: 'flex',
@@ -105,8 +106,9 @@ const checkPasswordIsValid = (aString)=> {
         <Form
         onSubmit={onSignUp}
         render={({ handleSubmit, pristine, invalid }) => (
-      <form onSubmit={onSignUp} className={classes.container} noValidate autoComplete="off">
-        <TextField
+      <form onSubmit={onSignUp} className={classes.container} autoComplete="off">
+        <Field
+          component={TextField}
           required
           onChange={e => this.setState({name : e.target.value})}
           value={this.state.name}
@@ -115,7 +117,8 @@ const checkPasswordIsValid = (aString)=> {
           margin="normal"
           variant="outlined"
         />
-        <TextField
+        <Field
+          component={TextField}
           required
           onChange={e => this.setState({email : e.target.value})}
           label="Email"
@@ -124,8 +127,10 @@ const checkPasswordIsValid = (aString)=> {
           margin="normal"
           variant="outlined"
         />
-        <TextField
+        <Field
+          component={TextField}
           required
+          minLength={8}
           onChange={e => this.setState({password : e.target.value})}
           value={this.state.password}
           label="Password"
@@ -134,7 +139,8 @@ const checkPasswordIsValid = (aString)=> {
           variant="outlined"
           type="password"
         />
-        <TextField
+        <Field
+          component={TextField}
           required
           onChange={e => this.setState({avatar : e.target.value})}
           value={this.state.avatar}
@@ -143,7 +149,8 @@ const checkPasswordIsValid = (aString)=> {
           margin="normal"
           variant="outlined"
         />
-        <TextField
+        <Field
+          component={TextField}
           required
           onChange={e => this.setState({bio : e.target.value})}
           value={this.state.bio}
@@ -152,25 +159,27 @@ const checkPasswordIsValid = (aString)=> {
           margin="normal"
           variant="outlined"
         />
-        <Button  type="submit"  color="primary" className={classes.button}>
+        <Button style={{'padding' : '5px', 'marginTop' : '16px', 'height' : '56px'}} variant="contained" type="submit"  color="primary" className={classes.button}>
            Sign Up
             <Fingerprint/>
          </Button>
-         <Button color="primary" className={classes.button}>
-     <Link to="/Home">Go to Homepage</Link>
-    </Button>
+        <Button color="primary" className={classes.button}>
+            <Link to="/Home">Go to Homepage</Link>
+        </Button>
       </form>
         )}
         />
-      <p className="p-link" onClick={this.handleToggleSignUp} >Click here to login !</p>
+      <p style={{'fontSize' : '15px'}} className="p-link" onClick={this.handleToggleSignUp} >Click here to login</p>
       </div>
       : 
       <div>
         <Form
         onSubmit={onLogin}
         render={({ handleSubmit, pristine, invalid }) => (
-      <form onSubmit={onLogin}>
-        <TextField
+      <form style={{'display' : 'block'}} onSubmit={onLogin}>
+      <div>
+      <Field
+          component={TextField}
           required
           label="Email"
           onChange={e => this.setState({email : e.target.value})}
@@ -179,7 +188,8 @@ const checkPasswordIsValid = (aString)=> {
           margin="normal"
           variant="outlined"
         />
-        <TextField
+        <Field
+          component={TextField}
           required
           value={this.state.password}
           onChange={e => this.setState({password : e.target.value})}
@@ -189,17 +199,18 @@ const checkPasswordIsValid = (aString)=> {
           variant="outlined"
           type="password"
         />
-        <Button  type="submit"  color="primary" className={classes.button}>
+        <Button style={{'padding' : '5px', 'marginTop' : '16px', 'height' : '56px'}} variant="contained" type="submit"  color="primary" className={classes.button}>
             Log In
             <Fingerprint/>
          </Button>
-         <Button color="primary" className={classes.button}>
-     <Link to="/Home">Go to Homepage</Link>
-    </Button>
+      </div>
+        <Button color="primary" className={classes.button}>
+           <Link to="/Home">Go to Homepage</Link>
+        </Button>
       </form>
         )}
         />
-      <p  className="p-link" onClick={this.handleToggleSignUp} >Click here to sign-up !</p>
+      <p style={{'fontSize' : '15px'}} className="p-link" onClick={this.handleToggleSignUp} >Click here to sign-up</p>
       </div>
     );
   }

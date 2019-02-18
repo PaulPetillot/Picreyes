@@ -7,8 +7,7 @@ import CameraAlt from '@material-ui/icons/CameraAlt';
 import Send from '@material-ui/icons/Send';
 import Button from '@material-ui/core/Button';
 import { Meteor } from 'meteor/meteor';
-import Posts from '../../../api/posts';
-import { Form, Field } from 'react-final-form';
+import { Form } from 'react-final-form';
 
 const styles = theme => ({
   margin: {

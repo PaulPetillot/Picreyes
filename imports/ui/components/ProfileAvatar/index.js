@@ -29,7 +29,7 @@ const styles = {
        : 
        <Link to="/Login">
       <Grid className="avatar-div" container justify="flex-end"  alignItems="center">
-      <Button variant="outlined" size="medium" color="primary" className={classes.margin}>
+      <Button variant="contained" style={{'backgroundColor' : '#CC2C2C'}} size="medium" color="primary" className={classes.margin}>
         Login / Sign-Up    
       </Button>
       </Grid>

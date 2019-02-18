@@ -94,9 +94,9 @@ render(){
           image={this.props.image}
         />
         
-        <CardContent>
-        <CardActions>
-        <div className="like-btn" onClick={() => this.updateLike()}>
+        <CardContent style={{'paddingBottom': '15px', 'paddingTop': '0px'}}>
+        <CardActions style={{'marginTop': '5px'}}>
+        <div style={{'marginLeft': '-12px'}} className="like-btn" onClick={() => this.updateLike()}>
                 <IconButton className={classes.button} aria-label="Like">
                 {this.state.liked ? <Favorite id="liked-btn"/>  :  <FavoriteBorder />}
                 </IconButton> 

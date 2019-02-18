@@ -1,12 +1,12 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import CreatePost from '../CreatePost';
+import { Meteor } from 'meteor/meteor';
 
 export default class CreatePostButton extends React.Component {
   state = {
@@ -23,6 +23,7 @@ export default class CreatePostButton extends React.Component {
 
   render() {
     return (
+      Meteor.user() ?
       <div>
         <Button style={{'position':'fixed', 'right' : '20px',
          'bottom' : '20px', 'backgroundColor' : '#0C6CD4', 'padding' : '10px', 'zIndex' : '5',
@@ -50,6 +51,8 @@ export default class CreatePostButton extends React.Component {
           </DialogActions>
         </Dialog>
       </div>
+      :
+      ''
     );
   }
 }
