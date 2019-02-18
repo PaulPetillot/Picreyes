@@ -44,7 +44,7 @@ handleToggleSignUp = sign =>{
   aString = aString || '';
   return aString.length > 1 && aString.indexOf('@') > -1;
 }
-
+const baseUrl = window.location.origin;
 const checkPasswordIsValid = (aString)=> {
   aString = aString || '';
   return aString.length > 7;
@@ -66,7 +66,7 @@ const checkPasswordIsValid = (aString)=> {
         alert('Your password must be at least 8 characters long');
       }
     } else {  
-      Accounts.createUser({
+     await Accounts.createUser({
         email: emailAddress,
         password: password,
         profile: {
@@ -75,28 +75,17 @@ const checkPasswordIsValid = (aString)=> {
           bio : this.state.bio
         } 
     }); 
+   // window.location.replace(baseUrl + '/Home')
     }
   }
 
   const onLogin = async values => {
-    console.log('login' + Meteor.user())
-    if (!isValidEmail || !isValidPassword) {
-        if (!isValidEmail) {
-          alert('Invalid email address');
-        }
-        if (!isValidPassword) {
-          alert('Your password must be at least 8 characters long');
-        }
-      } else {
-        Meteor.loginWithPassword(emailAddress, password, function (error) {
-          if (error) {
-            alert('Account login failed for unknown reasons :(');
-          } else {
-            ''
-          }
-        });
-      
-  }}
+    values.preventDefault()
+    let emailAddress = this.state.email || '';
+    let password = this.state.password || '';
+    await Meteor.loginWithPassword(emailAddress, password);
+    //window.location.replace(baseUrl + '/Home')
+  }
 
     const { classes } = this.props;
 
@@ -164,7 +153,7 @@ const checkPasswordIsValid = (aString)=> {
             <Fingerprint/>
          </Button>
         <Button color="primary" className={classes.button}>
-            <Link to="/Home">Go to Homepage</Link>
+          <a href={baseUrl + "/Home"} >Go to Homepage</a>
         </Button>
       </form>
         )}
@@ -205,7 +194,7 @@ const checkPasswordIsValid = (aString)=> {
          </Button>
       </div>
         <Button color="primary" className={classes.button}>
-           <Link to="/Home">Go to Homepage</Link>
+           <a href={baseUrl + "/Home"}>Go to Homepage</a>
         </Button>
       </form>
         )}

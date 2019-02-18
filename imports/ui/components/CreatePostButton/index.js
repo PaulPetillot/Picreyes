@@ -11,6 +11,7 @@ import { Meteor } from 'meteor/meteor';
 export default class CreatePostButton extends React.Component {
   state = {
     open: false,
+    user : ''
   };
 
   handleClickOpen = () => {
@@ -20,10 +21,14 @@ export default class CreatePostButton extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
   };
+  
+componentWillMount(){
+  this.setState({ user: Meteor.user() ? Meteor.user()._id : '' });
+}
 
   render() {
     return (
-      Meteor.user() ?
+      // this.state.user ?
       <div>
         <Button style={{'position':'fixed', 'right' : '20px',
          'bottom' : '20px', 'backgroundColor' : '#0C6CD4', 'padding' : '10px', 'zIndex' : '5',
@@ -51,8 +56,8 @@ export default class CreatePostButton extends React.Component {
           </DialogActions>
         </Dialog>
       </div>
-      :
-      ''
+      // :
+      // ''
     );
   }
 }

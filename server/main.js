@@ -1,8 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import Comments from '/imports/api/comments';
 import Posts from '/imports/api/posts';
-import Users from '/imports/api/users';
-import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
 Posts.schema = new SimpleSchema({
   like: {
@@ -29,46 +26,6 @@ Posts.schema = new SimpleSchema({
 });
 
 
-Users.schema = new SimpleSchema({
-  avatar: {
-    type: String
-  },
-  bio: {
-    type: String
-  },
-  name:{
-    type : String
-  }
-
-});
-
-Comments.schema = new SimpleSchema({
-  comment: {
-    type: String
-  },
-  userID: {
-    type: String
-  },
-  date: {
-    type: Date
-  }
-});
-
-// function insertUser(avatar, bio, name) {
-//   const incomingData = {
-//     avatar,
-//     bio,
-//     name
-//   };
-//   try {
-//     Users.schema.validate(incomingData);
-//     Users.insert(incomingData);
-//     return incomingData;
-//   }
-//   catch(error) {
-//     console.error(error);
-//   }
-// }
 
 // function insertPost(like, comments, image, description) {
 //   const incomingData = {
@@ -90,33 +47,16 @@ Comments.schema = new SimpleSchema({
 //   }
 // }
 
-// function insertComments(comment, userID, date) {
-//   const incomingData = {
-//     comment,
-//     userID,
-//     date
-//   };
-//   try {
-//     Comments.schema.validate(incomingData);
-//     Comments.insert(incomingData);
-//     return incomingData;
-
-//   }
-//   catch(error) {
-//     console.error(error);
-//   }
-// }
 
 Meteor.methods({
   'Posts.insert'(image, description) {
-    console.log('test');
     check(image, String);
     check(description, String);
     // Make sure the user is logged in before inserting a task
     if (! this.userId) {
       throw new Meteor.Error('not-authorized');
     }
- 
+  if (image.length && description.length){
     Posts.insert({
       like:0,
       userLiked: [],
@@ -125,7 +65,10 @@ Meteor.methods({
       description : description,
       user: Meteor.user() //this.userID
     });
+  }else{
+    console.log('failed')
   }
+}
 
 });
 

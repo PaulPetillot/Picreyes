@@ -58,13 +58,13 @@ render(){
             <Description />
           </Grid>
           <Grid item>
-            <TextField value={this.state.description} label="Describe your post.." onChange={e => this.setState({description : e.target.value})}/>
+            <TextField required value={this.state.description} label="Describe your post.." onChange={e => this.setState({description : e.target.value})}/>
           </Grid>
           <Grid item>
             <CameraAlt />
           </Grid>
           <Grid item>
-            <TextField value={this.state.image} onChange={e => this.setState({image : e.target.value})} label="Your image Url.." />
+            <TextField required value={this.state.image} onChange={e => this.setState({image : e.target.value})} label="Your image Url.." />
           </Grid>
           <Grid item>
           <Button  type="submit" variant="contained" style={{'marginBottom' : '0px'}} color="primary" className={classes.button}>
