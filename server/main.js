@@ -68,7 +68,34 @@ Meteor.methods({
   }else{
     console.log('failed')
   }
-}
+},
+'Posts.remove'(id, userid) {
+  // Make sure the user is logged in before inserting a task
+  if (! this.userId) {
+    throw new Meteor.Error('not-authorized');
+  }
+  if (this.userId === userid){
+    try {
+      Posts.remove( { "_id" : id } );
+   } catch (e) {
+      print(e);
+   }
+  }
+  
+},
+'Posts.undo'(like, userLiked, comments, image, description) {
+  if (! this.userId) {
+    throw new Meteor.Error('not-authorized');
+  }
+  Posts.insert({
+    like,
+    userLiked,
+    comments,
+    image: image,
+    description : description,
+    user: Meteor.user()
+  });
+},
 
 });
 

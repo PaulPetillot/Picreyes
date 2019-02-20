@@ -9,7 +9,10 @@ class PostWrapper extends Component{
   render() {
     return (
     <div className="card-wrapper">
-    {this.props.posts.map((post, idx)=>{  return <SinglePost userliked={post.userLiked} _id={post._id} image={post.image} comments={post.comments} like={post.like} description={post.description} user={post.user} key={idx} handleClickAction={this.handleClick}  idx={idx}  />})}
+    {this.props.posts.map((post, idx)=>{  return <SinglePost 
+    userliked={post.userLiked} _id={post._id} image={post.image} 
+    comments={post.comments} like={post.like} description={post.description} 
+    user={post.user} key={idx} handleClickAction={this.handleClick}  idx={idx}  />})}
     </div>
     )
   }

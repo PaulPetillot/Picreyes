@@ -17,6 +17,7 @@ import TextField from '@material-ui/core/TextField';
 import Fab from '@material-ui/core/Fab';
 import { Link } from 'react-router-dom';
 import Send from '@material-ui/icons/Send';
+import DeletePost from '../DeletePost';
 const styles = {
   card: {
     minWidth: 300,
@@ -103,7 +104,10 @@ render(){
         </div>
         <Typography component="p">
             {this.props.like}
-        </Typography>
+        </Typography> 
+        <div style={{'marginLeft' : '188px'}}> 
+       { ( Meteor.user() ? (Meteor.user()._id=== this.props.user._id) ? <DeletePost userid={this.props.user._id} _id={this.props._id} /> : '' : null)}
+        </div> 
       </CardActions>
       <Link style={{'textDecoration' : 'none'}} to={"/User/"+this.props.user._id}>
         <CardHeader className="card-header"
