@@ -80,26 +80,9 @@ Meteor.methods({
    } catch (e) {
       print(e);
    }
-  }
-  
-},
-'Posts.undo'(like, userLiked, comments, image, description) {
-  if (! this.userId) {
-    throw new Meteor.Error('not-authorized');
-  }
-  Posts.insert({
-    like,
-    userLiked,
-    comments,
-    image: image,
-    description : description,
-    user: Meteor.user()
-  });
-},
+  } 
+}
 
 });
-
-//https://i.kym-cdn.com/entries/icons/original/000/028/232/hamster.jpg
-
 
 export { insertPost };

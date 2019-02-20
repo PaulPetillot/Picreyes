@@ -1,75 +1,66 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Snackbar from '@material-ui/core/Snackbar';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-const styles = theme => ({
-  close: {
-    padding: theme.spacing.unit / 2,
-  },
-});
+function Transition(props) {
+  return <Slide direction="up" {...props} />;
+}
 
 class DeletePost extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-        open: false
-        };
-    }
-  
-  handleClick = () => {
-    this.setState({ open: true });
-    Meteor.call('Posts.remove', this.props._id, this.props.userid);
+  state = {
+    open: false,
   };
 
-  handleCloseUndo = () => {
-    const specificPost = Posts.findOne({_id: this.props._id})
-    Meteor.call('Posts.undo', specificPost.like, specificPost.userLiked, specificPost.comments, specificPost.image, specificPost.description);
-    this.setState({ open: false });
+  handleClickOpen = () => {
+    this.setState({ open: true });
   };
 
   handleClose = () => {
     this.setState({ open: false });
   };
 
+ handleCloseYes = () => {
+    this.setState({ open: false });
+     Meteor.call('Posts.remove', this.props._id, this.props.userid);
+  };
   render() {
-    const { classes } = this.props;
     return (
       <div>
-        <DeleteIcon onClick={this.handleClick}>Open simple snackbar</DeleteIcon>
-        <Snackbar
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}
+        <DeleteIcon variant="outlined" color="primary" onClick={this.handleClickOpen}/>
+        <Dialog
           open={this.state.open}
-          autoHideDuration={3000}
+          TransitionComponent={Transition}
+          keepMounted
           onClose={this.handleClose}
-          ContentProps={{
-            'aria-describedby': 'message-id',
-          }}
-          message={<span id="message-id">Post removed</span>}
-          action={[
-            <Button key="undo" color="secondary" size="small" onClick={this.handleCloseUndo}>
-              UNDO
-            </Button>,
-            <IconButton
-              key="close"
-              aria-label="Close"
-              color="inherit"
-              className={classes.close}
-              onClick={this.handleClose}
-            >
-              <CloseIcon />
-            </IconButton>,
-          ]}
-        />
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title">
+            {"Do you really want to delete this post ?"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+              This action can't be undo.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              No
+            </Button>
+            <Button onClick={this.handleCloseYes} color="primary">
+              Yes
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     );
   }
 }
 
-export default withStyles(styles)(DeletePost);
+export default DeletePost;
